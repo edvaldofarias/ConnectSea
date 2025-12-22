@@ -1,0 +1,7 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/ConnectSea.Domain/ConnectSea.Domain.csproj" />
+    <Project Path="src/ConnectSea.Infrastructure.Data/ConnectSea.Infrastructure.Data.csproj" />
+    <Project Path="src/ConnectSea.WebApi/ConnectSea.WebApi.csproj" />
+  </Folder>
+</Solution>
