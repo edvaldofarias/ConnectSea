@@ -13,6 +13,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IEscalaService, EscalaService>();
 builder.Services.AddScoped<IManifestoService, ManifestoService>();
@@ -31,6 +32,8 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();
@@ -46,14 +49,17 @@ using (var scope = app.Services.CreateScope())
     await WaitForDatabaseAsync(db, TimeSpan.FromSeconds(30));
     await db.Database.MigrateAsync();
 
-    if (await db.Manifestos.AnyAsync()) return;
-        
-    var sqlFile = Path.Combine(AppContext.BaseDirectory, "Seeds", "Initial.sql");
-    if (File.Exists(sqlFile))
+    if (!await db.Manifestos.AnyAsync())
     {
-        var sql = await File.ReadAllTextAsync(sqlFile);
-        await db.Database.ExecuteSqlRawAsync(sql);
+        var sqlFile = Path.Combine(AppContext.BaseDirectory, "Seeds", "Initial.sql");
+        if (File.Exists(sqlFile))
+        {
+            var sql = await File.ReadAllTextAsync(sqlFile);
+            await db.Database.ExecuteSqlRawAsync(sql);
+        }
     }
+        
+
 }
 
 await app.RunAsync();
