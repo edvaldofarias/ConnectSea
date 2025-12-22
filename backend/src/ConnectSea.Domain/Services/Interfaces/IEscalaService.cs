@@ -1,8 +1,8 @@
-﻿using ConnectSea.Domain.Entities;
+﻿using ConnectSea.Domain.Dtos;
 
 namespace ConnectSea.Domain.Services.Interfaces;
 
 public interface IEscalaService
 {
-    Task<IEnumerable<Escala>> GetEscalasAsync();
+    Task<IEnumerable<EscalaDto>> GetEscalasAsync();
 }

@@ -4,4 +4,7 @@
     <Project Path="src/ConnectSea.Infrastructure.Data/ConnectSea.Infrastructure.Data.csproj" />
     <Project Path="src/ConnectSea.WebApi/ConnectSea.WebApi.csproj" />
   </Folder>
+  <Folder Name="/test/">
+    <Project Path="test/ConnectSea.Domain.Test/ConnectSea.Domain.Test.csproj" />
+  </Folder>
 </Solution>

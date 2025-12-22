@@ -1,17 +1,16 @@
 ﻿using ConnectSea.Domain.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ConnectSea.WebApi.Controllers
+namespace ConnectSea.WebApi.Controllers;
+
+[ApiController]
+[Route("[controller]")]
+public class EscalasController : ControllerBase
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class EscalasController : ControllerBase
+    [HttpGet]
+    public async Task<IActionResult> Get([FromServices] IEscalaService service)
     {
-        [HttpGet]
-        public async Task<IActionResult> Get([FromServices] IEscalaService service)
-        {
-            var escalas = await service.GetEscalasAsync();
-            return Ok(escalas);
-        }
+        var escalas = await service.GetEscalasAsync();
+        return Ok(escalas);
     }
 }
