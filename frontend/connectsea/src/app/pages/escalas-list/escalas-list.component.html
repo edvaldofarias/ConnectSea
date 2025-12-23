@@ -1,0 +1,36 @@
+<div class="container mt-4">
+  <h3 class="mb-3">Escalas</h3>
+
+  <table class="table table-striped table-bordered align-middle">
+    <thead class="table-dark">
+      <tr>
+        <th>#</th>
+        <th>Navio</th>
+        <th>Porto</th>
+        <th>Status</th>
+        <th>ETA</th>
+        <th>ETB</th>
+        <th>ETD</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let escala of escalas">
+        <td>{{ escala.id }}</td>
+        <td>{{ escala.navio }}</td>
+        <td>{{ escala.porto }}</td>
+        <td>
+          {{ escala.status === 1 ? 'Prevista' : escala.status === 2 ? 'Atracada' : 'Finalizada' }}
+        </td>
+        <td>{{ escala.eta | date:'dd/MM/yyyy HH:mm' }}</td>
+        <td>{{ escala.etb | date:'dd/MM/yyyy HH:mm' }}</td>
+        <td>{{ escala.etd | date:'dd/MM/yyyy HH:mm' }}</td>
+      </tr>
+
+      <tr *ngIf="escalas.length === 0">
+        <td colspan="7" class="text-center">
+          Nenhuma escala encontrada
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
