@@ -10,6 +10,9 @@ WORKDIR /src
 COPY ["src/ConnectSea.WebApi/ConnectSea.WebApi.csproj", "src/ConnectSea.WebApi/"]
 COPY ["src/ConnectSea.Domain/ConnectSea.Domain.csproj", "src/ConnectSea.Domain/"]
 COPY ["src/ConnectSea.Infrastructure.Data/ConnectSea.Infrastructure.Data.csproj", "src/ConnectSea.Infrastructure.Data/"]
+COPY ["Directory.Build.targets", ""]
+COPY ["Directory.Build.props", ""]
+COPY [".editorconfig", ""]
 RUN dotnet restore "src/ConnectSea.WebApi/ConnectSea.WebApi.csproj"
 COPY . .
 WORKDIR "/src/src/ConnectSea.WebApi"
