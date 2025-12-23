@@ -14,12 +14,12 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let escala of escalas">
+      <tr *ngFor="let escala of escalas" [class.table-danger]="escala.status === StatusEscala.Cancelada">
         <td>{{ escala.id }}</td>
         <td>{{ escala.navio }}</td>
         <td>{{ escala.porto }}</td>
         <td>
-          {{ escala.status === 1 ? 'Prevista' : escala.status === 2 ? 'Atracada' : 'Finalizada' }}
+          {{ escala.status === 1 ? 'Prevista' : escala.status === 2 ? 'Atracada' : escala.status === 3 ? 'Finalizada' : 'Cancelada' }}
         </td>
         <td>{{ escala.eta | date:'dd/MM/yyyy HH:mm' }}</td>
         <td>{{ escala.etb | date:'dd/MM/yyyy HH:mm' }}</td>
@@ -27,7 +27,7 @@
       </tr>
 
       <tr *ngIf="escalas.length === 0">
-        <td colspan="7" class="text-center">
+        <td colspan="8" class="text-center">
           Nenhuma escala encontrada
         </td>
       </tr>

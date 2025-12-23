@@ -8,11 +8,16 @@ import { Manifesto } from '../models/manifesto.model';
 })
 export class ManifestosService {
 
-  private readonly baseUrl = 'http://localhost:8080/manifestos';
+  private readonly baseUrl = 'http://localhost:5113/manifestos';
 
   constructor(private http: HttpClient) {}
 
   listar(): Observable<Manifesto[]> {
     return this.http.get<Manifesto[]>(this.baseUrl);
+  }
+
+  vincularEscala(manifestoId: number, escalaId: number): Observable<any> {
+    const url = `${this.baseUrl}/${manifestoId}/vincular-escala/${escalaId}`;
+    return this.http.post(url, {});
   }
 }

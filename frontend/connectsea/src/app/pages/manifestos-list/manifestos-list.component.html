@@ -10,6 +10,7 @@
         <th>Navio</th>
         <th>Origem</th>
         <th>Destino</th>
+        <th>Vincular</th>
       </tr>
     </thead>
     <tbody>
@@ -20,13 +21,37 @@
         <td>{{ manifesto.navio }}</td>
         <td>{{ manifesto.portoOrigem }}</td>
         <td>{{ manifesto.portoDestino }}</td>
+        <td>
+          <button class="btn btn-primary btn-sm" (click)="openModal(manifesto.id)">Vincular</button>
+        </td>
       </tr>
 
       <tr *ngIf="manifestos.length === 0">
-        <td colspan="6" class="text-center">
+        <td colspan="7" class="text-center">
           Nenhum manifesto encontrado
         </td>
       </tr>
     </tbody>
   </table>
+</div>
+
+<div class="modal-backdrop" *ngIf="showModal">
+  <div class="modal-window">
+    <div class="modal-header d-flex justify-content-between align-items-center">
+      <h5 class="m-0">Selecionar Escala</h5>
+      <button class="btn btn-sm btn-light" (click)="closeModal()">×</button>
+    </div>
+    <div class="modal-body">
+      <ul class="list-group">
+        <li *ngFor="let e of escala" (click)="selectEscala(e.id)" [class.active]="selectedEscalaId===e.id" [class.cancelled]="e.status === StatusEscala.Cancelada" class="list-group-item list-group-item-action">
+          {{ e.id }} — {{ e.navio }} ({{ e.porto }})
+          <div class="small text-muted">ETA: {{ e.eta }} | ETD: {{ e.etd }}</div>
+        </li>
+      </ul>
+    </div>
+    <div class="modal-footer d-flex justify-content-end">
+      <button class="btn btn-secondary me-2" (click)="closeModal()">Cancelar</button>
+      <button class="btn btn-primary" [disabled]="!selectedEscalaId" (click)="confirmVincular()">Vincular escala selecionada</button>
+    </div>
+  </div>
 </div>
