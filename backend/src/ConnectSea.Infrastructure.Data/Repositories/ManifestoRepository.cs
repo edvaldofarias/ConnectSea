@@ -7,10 +7,23 @@ namespace ConnectSea.Infrastructure.Data.Repositories;
 
 public class ManifestoRepository(ConnectSeaContext context) : IManifestoRepository
 {
+    public Task<Manifesto?> GetByIdAsync(int id)
+    {
+        return context.Manifestos
+            .Include(m => m.ManifestoEscalas)
+            .FirstOrDefaultAsync(m => m.Id == id);
+    }
+
     public async Task<IEnumerable<Manifesto>> GetManifestosAsync()
     {
         return await context.Manifestos
             .AsNoTracking()
             .ToListAsync();
+    }
+
+    public Task UpdateAsync(Manifesto manifesto)
+    {
+        context.Update(manifesto);
+        return context.SaveChangesAsync();
     }
 }

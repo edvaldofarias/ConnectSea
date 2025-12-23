@@ -7,6 +7,12 @@ namespace ConnectSea.Infrastructure.Data.Repositories;
 
 public class EscalaRepository(ConnectSeaContext context) : IEscalaRepository
 {
+    public Task<Escala?> GetEscalaByIdAsync(int id)
+    {
+        return context.Escala
+            .FirstOrDefaultAsync(e => e.Id == id);
+    }
+
     public async Task<IEnumerable<Escala>> GetEscalasAsync()
     {
         return await context.Escala

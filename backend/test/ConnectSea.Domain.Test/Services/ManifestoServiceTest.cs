@@ -19,11 +19,12 @@ public class ManifestoServiceTest
         {
             new(numero, tipo, navio, portoOrigem, portoDestino)
         };
-        var escalaServiceMock = new Mock<IManifestoRepository>();
-        escalaServiceMock.Setup(es => es.GetManifestosAsync())
+        var manifestoServiceMock = new Mock<IManifestoRepository>();
+        manifestoServiceMock.Setup(es => es.GetManifestosAsync())
             .ReturnsAsync(manifestos);
+        var escalaServiceMock = new Mock<IEscalaRepository>();
 
-        var manifestoService = new ConnectSea.Domain.Services.ManifestoService(escalaServiceMock.Object);
+        var manifestoService = new ConnectSea.Domain.Services.ManifestoService(manifestoServiceMock.Object, escalaServiceMock.Object);
 
         // Act
         var manifestosDto = await manifestoService.GetManifestosAsync();

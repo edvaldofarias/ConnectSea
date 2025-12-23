@@ -1,5 +1,4 @@
 ﻿using ConnectSea.Domain.Enums;
-using System.Linq;
 
 namespace ConnectSea.Domain.Entities;
 
