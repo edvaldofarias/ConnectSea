@@ -65,7 +65,7 @@ using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
     var db = services.GetRequiredService<ConnectSeaContext>();
-    await WaitForDatabaseAsync(db, TimeSpan.FromSeconds(30));
+    await WaitForDatabaseAsync(db, TimeSpan.FromSeconds(60));
     await db.Database.MigrateAsync();
 
     if (!await db.Manifestos.AnyAsync())
