@@ -14,5 +14,7 @@ public class ConnectSeaContext(DbContextOptions<ConnectSeaContext> options) : Db
     public DbSet<Escala> Escala => Set<Escala>();
 
     public DbSet<Manifesto> Manifestos => Set<Manifesto>();
+
+    public DbSet<ManifestoEscala> ManifestoEscalas => Set<ManifestoEscala>();
     
 }
