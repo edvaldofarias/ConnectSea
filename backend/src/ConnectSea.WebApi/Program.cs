@@ -4,13 +4,30 @@ using ConnectSea.Domain.Services;
 using ConnectSea.Domain.Services.Interfaces;
 using ConnectSea.Infrastructure.Data.Context;
 using ConnectSea.Infrastructure.Data.Repositories;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+builder.Services
+    .AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.DefaultIgnoreCondition =
+            System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull;
+    });
 
-builder.Services.AddControllers();
+builder.Services.AddResponseCompression(options =>
+{
+    options.EnableForHttps = true;
+    options.Providers.Add<GzipCompressionProvider>();
+    options.Providers.Add<BrotliCompressionProvider>();
+});
+
+builder.Services.Configure<GzipCompressionProviderOptions>(options =>
+{
+    options.Level = System.IO.Compression.CompressionLevel.Fastest;
+});
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen();
@@ -21,12 +38,14 @@ builder.Services.AddScoped<IManifestoService, ManifestoService>();
 builder.Services.AddScoped<IEscalaRepository, EscalaRepository>();
 builder.Services.AddScoped<IManifestoRepository, ManifestoRepository>();
 
-builder.Services.AddDbContext<ConnectSeaContext>(options =>
-{
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-});
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ??
+                       throw new InvalidOperationException("Connection string 'ConnectSeaDatabase' not found.");
+
+builder.Services.AddDbContext<ConnectSeaContext>(options => { options.UseSqlServer(connectionString); });
 
 var app = builder.Build();
+
+app.UseResponseCompression();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -58,8 +77,6 @@ using (var scope = app.Services.CreateScope())
             await db.Database.ExecuteSqlRawAsync(sql);
         }
     }
-        
-
 }
 
 await app.RunAsync();
