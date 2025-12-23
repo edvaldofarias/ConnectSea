@@ -8,7 +8,7 @@ import { Escala } from '../models/escala.model';
 })
 export class EscalasService {
 
-    private readonly baseUrl = 'http://localhost:5113/escalas';
+    private readonly baseUrl = 'http://localhost:8080/escalas';
 
     constructor(private http: HttpClient) {}
 

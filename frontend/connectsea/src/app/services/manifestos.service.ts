@@ -8,7 +8,7 @@ import { Manifesto } from '../models/manifesto.model';
 })
 export class ManifestosService {
 
-  private readonly baseUrl = 'http://localhost:5113/manifestos';
+  private readonly baseUrl = 'http://localhost:8080/manifestos';
 
   constructor(private http: HttpClient) {}
 
